@@ -1,72 +1,74 @@
+Absolutely — here's a **cleaned, merged, clearer, and more professional** README that keeps your styling but avoids duplication, clarifies features, and improves flow & SEO.
+
+---
 
 # 🎙️ Speech-To-Text & Auto-Captions Converter
 
-A powerful Python tool to transcribe **audio or video** into:
+**Local Whisper-powered subtitle generator — Audio & Video → TXT / SRT / VTT**
 
-✅ **Text** (.txt)
-✅ **SRT Subtitles** (.srt)
-✅ **WebVTT Captions** (.vtt)
+A powerful, privacy-first Python tool to convert **audio or video** into:
 
-Supports **audio + video**, **auto-speech extraction**, **accurate timestamps**, **Whisper / Faster-Whisper**, and GUI or CLI usage.
+✅ Text (`.txt`)
+✅ SRT Subtitles (`.srt`)
+✅ WebVTT Captions (`.vtt`)
 
-Convert **MP3, WAV, MP4, MKV, MOV, M4A, OGG, FLAC** → readable captions or subtitle files.
+Powered by **Faster-Whisper** (CPU-optimized) with **OpenAI Whisper fallback** — no internet required.
 
----
+Supports **MP3, WAV, MP4, MKV, MOV, FLAC, OGG, M4A** and more.
 
-### ✨ Features
-
-| Feature                         | Description                                  |
-| ------------------------------- | -------------------------------------------- |
-| 🎥 **Video → Audio → Captions** | Auto-extracts audio from video (FFmpeg)      |
-| 🎧 **Audio transcription**      | MP3, WAV, OGG, FLAC, M4A etc.                |
-| ⚡ **Faster-Whisper support**    | GPU-accelerated real-time transcription      |
-| 🧠 **OpenAI Whisper fallback**  | Uses whisper if faster-whisper not installed |
-| 📂 **File Picker UI**           | Tkinter file prompt if run without args      |
-| 🗣️ **Language selection**      | Auto-detect or force language                |
-| 🛠 **CLI usage**                | Scriptable for workflows                     |
-| 📜 **Outputs**                  | `.srt`, `.vtt`, `.txt`                       |
+> Output files are saved **in the same folder as the script by default** (configurable).
 
 ---
 
-### 📦 Installation
+## ✨ Features
 
-> Python 3.8+
+| Capability                  | Details                                             |
+| --------------------------- | --------------------------------------------------- |
+| 🎥 Video → Audio → Captions | Automatically extracts 16k mono WAV w/ FFmpeg       |
+| 🎧 Audio Transcription      | MP3 / WAV / M4A / FLAC / OGG / AAC ...              |
+| ⚡ Faster-Whisper            | Fast CPU inference (int8) + optional VAD            |
+| 🧠 Whisper Fallback         | Uses official Whisper if Faster-Whisper unavailable |
+| 🗂 GUI File Picker          | Select file if `--file` not provided                |
+| 🛠 Command Line             | Scriptable for automations / batch workflows        |
+| 🌍 Language Support         | Auto-detect or manually specify `--lang`            |
+| 📦 Outputs                  | `.txt` `.srt` `.vtt` with timestamps                |
+| 🔐 Private & Local          | No cloud usage, no API keys — fully offline         |
 
-#### 1️⃣ Create and activate a virtual environment (recommended)
+---
 
-```bash
-python -m venv venv
-source venv/bin/activate   # macOS/Linux
-venv\Scripts\activate      # Windows
+## 📦 Requirements
+
+### Python
+
+```
+Python 3.8+
 ```
 
----
-
-#### 2️⃣ Install required packages
+### Install Dependencies
 
 ```bash
-pip install -U openai-whisper faster-whisper moviepy
+pip install -U faster-whisper openai-whisper onnxruntime
 ```
 
----
+> `onnxruntime` is optional but enables **Voice Activity Detection (VAD)**.
 
-#### 3️⃣ Install FFmpeg
+### Install FFmpeg
 
-FFmpeg is required for audio extraction.
+Required for extracting audio from video.
 
-**Windows (winget)**
+**Windows**
 
 ```bash
 winget install Gyan.FFmpeg
 ```
 
-**macOS (Homebrew)**
+**macOS**
 
 ```bash
 brew install ffmpeg
 ```
 
-**Linux (apt)**
+**Linux**
 
 ```bash
 sudo apt install ffmpeg
@@ -74,69 +76,87 @@ sudo apt install ffmpeg
 
 ---
 
-### 🚀 Usage
+## 🚀 Usage
 
-#### **GUI mode (file picker)**
+### GUI Mode — File Picker
+
+Just run the script:
 
 ```bash
 python Speech_To_Text.py
 ```
 
-#### **Command line**
+### Command-Line Example
 
 ```bash
 python Speech_To_Text.py --file video.mp4 --model small --lang en
 ```
 
-#### Options
+### CLI Options
 
-| Flag              | Description                                                |
-| ----------------- | ---------------------------------------------------------- |
-| `--file`, `-f`    | Input audio/video file                                     |
-| `--model`, `-m`   | Whisper model (`tiny`, `base`, `small`, `medium`, `large`) |
-| `--lang`, `-l`    | Force language (optional)                                  |
-| `--out-dir`, `-o` | Output folder                                              |
+| Flag            | Description                                                |
+| --------------- | ---------------------------------------------------------- |
+| `--file`, `-f`  | Input audio/video file path                                |
+| `--model`, `-m` | Whisper model (`tiny`, `base`, `small`, `medium`, `large`) |
+| `--lang`, `-l`  | Force language (optional)                                  |
+| `--out`, `-o`   | Custom output directory (default = script folder)          |
 
 ---
 
-### 📝 Example Outputs
+## 📂 Output Example
 
 ```
-video.mp4
- ├─ video.srt
- ├─ video.vtt
- └─ video.txt
+movie.mp4
+ ├─ movie.srt
+ ├─ movie.vtt
+ └─ movie.txt
 ```
 
 ---
 
-### ✅ Recommended Whisper Models
+## 🧠 Whisper Model Guide
 
-| Speed              | Model              | Notes                       |
-| ------------------ | ------------------ | --------------------------- |
-| 🔥 Fastest         | `tiny` / `base`    | Good accuracy, fast on CPU  |
-| 🎯 Balanced        | `small`            | Best overall choice         |
-| 🧠 Highest quality | `medium` / `large` | Slow on CPU, great accuracy |
-
----
-
-### 🎯 Roadmap
-
-* [ ] Add GUI progress bar
-* [ ] Add speaker diarization (who spoke when)
-* [ ] Option to burn subtitles into video
-* [ ] Support batch folder transcription
+| Model                 | Speed | Accuracy | Recommended For              |
+| --------------------- | ----- | -------- | ---------------------------- |
+| `tiny` / `base`       | ⚡⚡⚡   | ⭐⭐       | Fastest, notes, drafts       |
+| `small` (default)     | ⚡⚡    | ⭐⭐⭐⭐     | Best overall CPU balance     |
+| `medium`              | ⚡     | ⭐⭐⭐⭐⭐    | High-quality transcription   |
+| `large-v2 / large-v3` | 🐢    | ⭐⭐⭐⭐⭐⭐   | Best quality, slowest on CPU |
 
 ---
 
-### ❤️ Credits
+## ✅ Why This Tool?
+
+* No API keys or cloud accounts
+* Works offline — **ideal for private recordings**
+* Handles media files automatically
+* Accurate timestamped subtitles
+* Drop-in CLI and GUI workflow
+
+---
+
+## 🗺️ Roadmap
+
+* [ ] Progress bar GUI
+* [ ] Batch folder transcription
+* [ ] Subtitle hard-burn into video
+* [ ] Paragraph-formatted transcript mode
+* [ ] Speaker diarization (label speakers)
+
+---
+
+## ❤️ Credits
 
 * [OpenAI Whisper](https://github.com/openai/whisper)
 * [Faster-Whisper](https://github.com/guillaumekln/faster-whisper)
-* FFmpeg team
+* FFmpeg project
 
 ---
 
-### 📄 License
+## 📜 License
 
-MIT License — free to use, modify, distribute.
+MIT License — free to use, modify, and distribute.
+
+---
+
+
