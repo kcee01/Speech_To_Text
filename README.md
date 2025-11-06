@@ -1,7 +1,3 @@
-Here’s an updated **README** tailored to your current script with the progress bar and GUI improvements:
-
----
-
 # 🎙️ Speech-To-Text & Auto-Captions Converter
 
 **Local Whisper-powered subtitle generator — Audio & Video → TXT / SRT**
