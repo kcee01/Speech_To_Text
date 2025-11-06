@@ -1,38 +1,27 @@
-Absolutely — here's a **cleaned, merged, clearer, and more professional** README that keeps your styling but avoids duplication, clarifies features, and improves flow & SEO.
+Here’s an updated **README** tailored to your current script with the progress bar and GUI improvements:
 
 ---
 
 # 🎙️ Speech-To-Text & Auto-Captions Converter
 
-**Local Whisper-powered subtitle generator — Audio & Video → TXT / SRT / VTT**
+**Local Whisper-powered subtitle generator — Audio & Video → TXT / SRT**
 
-A powerful, privacy-first Python tool to convert **audio or video** into:
-
-✅ Text (`.txt`)
-✅ SRT Subtitles (`.srt`)
-✅ WebVTT Captions (`.vtt`)
-
-Powered by **Faster-Whisper** (CPU-optimized) with **OpenAI Whisper fallback** — no internet required.
+A Python tool to convert **audio or video** into timestamped subtitles (`.srt`) or text (`.txt`), entirely offline.
 
 Supports **MP3, WAV, MP4, MKV, MOV, FLAC, OGG, M4A** and more.
 
-> Output files are saved **in the same folder as the script by default** (configurable).
+> Output files are saved **in the same folder as the selected file**.
 
 ---
 
 ## ✨ Features
 
-| Capability                  | Details                                             |
-| --------------------------- | --------------------------------------------------- |
-| 🎥 Video → Audio → Captions | Automatically extracts 16k mono WAV w/ FFmpeg       |
-| 🎧 Audio Transcription      | MP3 / WAV / M4A / FLAC / OGG / AAC ...              |
-| ⚡ Faster-Whisper            | Fast CPU inference (int8) + optional VAD            |
-| 🧠 Whisper Fallback         | Uses official Whisper if Faster-Whisper unavailable |
-| 🗂 GUI File Picker          | Select file if `--file` not provided                |
-| 🛠 Command Line             | Scriptable for automations / batch workflows        |
-| 🌍 Language Support         | Auto-detect or manually specify `--lang`            |
-| 📦 Outputs                  | `.txt` `.srt` `.vtt` with timestamps                |
-| 🔐 Private & Local          | No cloud usage, no API keys — fully offline         |
+* 🎥 **Video → Audio → Captions**: Automatically extracts audio using FFmpeg.
+* 🎧 **Audio Transcription**: Supports popular formats like MP3, WAV, M4A, FLAC, OGG, AAC.
+* 🗂 **GUI File Picker**: Select a file via Tkinter dialog.
+* ⚡ **Indeterminate Progress Bar**: Shows live processing status.
+* ✅ **Done Button**: Allows closing the progress window when finished.
+* 🔐 **Fully Local & Private**: No cloud services or API keys required.
 
 ---
 
@@ -47,14 +36,12 @@ Python 3.8+
 ### Install Dependencies
 
 ```bash
-pip install -U faster-whisper openai-whisper onnxruntime
+pip install openai-whisper moviepy
 ```
-
-> `onnxruntime` is optional but enables **Voice Activity Detection (VAD)**.
 
 ### Install FFmpeg
 
-Required for extracting audio from video.
+Required for extracting audio from videos.
 
 **Windows**
 
@@ -80,75 +67,40 @@ sudo apt install ffmpeg
 
 ### GUI Mode — File Picker
 
-Just run the script:
+Simply run:
 
 ```bash
 python Speech_To_Text.py
 ```
 
-### Command-Line Example
+* A file picker dialog will appear.
+* Select your audio or video file.
+* A progress bar will appear during transcription.
+* When finished, a **Done** message and **Close** button will appear.
+* The `.srt` file will be saved in the same folder as the selected file.
 
-```bash
-python Speech_To_Text.py --file video.mp4 --model small --lang en
-```
-
-### CLI Options
-
-| Flag            | Description                                                |
-| --------------- | ---------------------------------------------------------- |
-| `--file`, `-f`  | Input audio/video file path                                |
-| `--model`, `-m` | Whisper model (`tiny`, `base`, `small`, `medium`, `large`) |
-| `--lang`, `-l`  | Force language (optional)                                  |
-| `--out`, `-o`   | Custom output directory (default = script folder)          |
-
----
-
-## 📂 Output Example
+### Example Output
 
 ```
-movie.mp4
- ├─ movie.srt
- ├─ movie.vtt
- └─ movie.txt
+Screen Recording 2025-11-04 203719.mp4
+ └─ Screen Recording 2025-11-04 203719.srt
 ```
 
 ---
 
-## 🧠 Whisper Model Guide
+## 🧠 Notes
 
-| Model                 | Speed | Accuracy | Recommended For              |
-| --------------------- | ----- | -------- | ---------------------------- |
-| `tiny` / `base`       | ⚡⚡⚡   | ⭐⭐       | Fastest, notes, drafts       |
-| `small` (default)     | ⚡⚡    | ⭐⭐⭐⭐     | Best overall CPU balance     |
-| `medium`              | ⚡     | ⭐⭐⭐⭐⭐    | High-quality transcription   |
-| `large-v2 / large-v3` | 🐢    | ⭐⭐⭐⭐⭐⭐   | Best quality, slowest on CPU |
-
----
-
-## ✅ Why This Tool?
-
-* No API keys or cloud accounts
-* Works offline — **ideal for private recordings**
-* Handles media files automatically
-* Accurate timestamped subtitles
-* Drop-in CLI and GUI workflow
-
----
-
-## 🗺️ Roadmap
-
-* [ ] Progress bar GUI
-* [ ] Batch folder transcription
-* [ ] Subtitle hard-burn into video
-* [ ] Paragraph-formatted transcript mode
-* [ ] Speaker diarization (label speakers)
+* The SRT file is named **exactly like the input file**, just with `.srt` extension.
+* Video files have their audio automatically extracted to a temporary WAV file during processing.
+* Whisper’s `base` model is used by default for a good balance of speed and accuracy.
+* GPU is disabled by default for maximum compatibility. Modify `os.environ["CUDA_VISIBLE_DEVICES"]` to enable if desired.
 
 ---
 
 ## ❤️ Credits
 
 * [OpenAI Whisper](https://github.com/openai/whisper)
-* [Faster-Whisper](https://github.com/guillaumekln/faster-whisper)
+* [MoviePy](https://zulko.github.io/moviepy/)
 * FFmpeg project
 
 ---
@@ -158,5 +110,6 @@ movie.mp4
 MIT License — free to use, modify, and distribute.
 
 ---
+
 
 
